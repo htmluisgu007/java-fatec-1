@@ -1,0 +1,639 @@
+/*atividade 1
+
+ 
+
+ 
+
+import java.util.Random;
+
+ 
+
+public class NumerosPares {
+
+ 
+
+    public static void main(String[] args) {
+        // Tamanho do array
+        int tamanhoArray = 10;
+
+ 
+
+        // Cria um objeto Random para gerar números aleatórios
+        Random random = new Random();
+
+ 
+
+        // Cria um array para armazenar os números aleatórios
+        int[] numerosAleatorios = new int[tamanhoArray];
+
+ 
+
+        // Preenche o array com números aleatórios entre 1 e 100
+        for (int i = 0; i < tamanhoArray; i++) {
+            numerosAleatorios[i] = random.nextInt(100) + 1;
+        }
+
+ 
+
+        // Imprime o array de números aleatórios
+        System.out.println("Array de números aleatórios:");
+        for (int i = 0; i < tamanhoArray; i++) {
+            System.out.print(numerosAleatorios[i] + " ");
+        }
+
+ 
+
+        // Imprime apenas os números pares
+        System.out.println("\nNúmeros pares:");
+        for (int i = 0; i < tamanhoArray; i++) {
+            if (numerosAleatorios[i] % 2 == 0) {
+                System.out.print(numerosAleatorios[i] + " ");
+            }
+        }
+    }
+}
+*/
+
+ 
+
+/*ativdade 2
+import java.util.Random;
+import java.util.Scanner;
+
+ 
+
+public class AdivinheONumero {
+
+ 
+
+    public static void main(String[] args) {
+        // Cria um objeto Random para gerar o número aleatório
+        Random random = new Random();
+        int numeroAleatorio = random.nextInt(100) + 1; // Número aleatório entre 1 e 100
+
+ 
+
+        // Cria um objeto Scanner para receber a entrada do usuário
+        Scanner scanner = new Scanner(System.in);
+
+ 
+
+        int tentativas = 0;
+        int palpite;
+
+ 
+
+        System.out.println("Adivinhe o número entre 1 e 100!");
+
+ 
+
+        do {
+            System.out.print("Digite seu palpite: ");
+            palpite = scanner.nextInt();
+            tentativas++;
+
+ 
+
+            if (palpite < numeroAleatorio) {
+                System.out.println("Seu palpite está baixo. Tente novamente.");
+            } else if (palpite > numeroAleatorio) {
+                System.out.println("Seu palpite está alto. Tente novamente.");
+            } else {
+                System.out.println("Parabéns! Você adivinhou o número " + numeroAleatorio + " em " + tentativas + " tentativas.");
+            }
+        } while (palpite != numeroAleatorio);
+
+ 
+
+        // Fecha o scanner
+        scanner.close();
+    }
+}
+*/
+
+ 
+
+*/ atividade 3
+import java.util.Random;
+
+ 
+
+public class MediaDeValores {
+
+ 
+
+    public static void main(String[] args) {
+        // Tamanho do array
+        int tamanhoArray = 20;
+
+ 
+
+        // Cria um objeto Random para gerar números aleatórios
+        Random random = new Random();
+
+ 
+
+        // Cria um array para armazenar os números aleatórios
+        int[] numerosAleatorios = new int[tamanhoArray];
+
+ 
+
+        // Preenche o array com números aleatórios entre 1 e 100
+        for (int i = 0; i < tamanhoArray; i++) {
+            numerosAleatorios[i] = random.nextInt(100) + 1;
+        }
+
+ 
+
+        // Calcula a média dos números no array
+        int soma = 0;
+        for (int i = 0; i < tamanhoArray; i++) {
+            soma += numerosAleatorios[i];
+        }
+
+ 
+
+        double media = (double) soma / tamanhoArray;
+
+ 
+
+        // Imprime o array de números aleatórios
+        System.out.println("Array de números aleatórios:");
+        for (int i = 0; i < tamanhoArray; i++) {
+            System.out.print(numerosAleatorios[i] + " ");
+        }
+
+ 
+
+        // Imprime a média dos números
+        System.out.println("\nMédia dos números: " + media);
+    }
+}
+*/
+
+ 
+
+/* atividade 4
+import java.util.Random;
+
+ 
+
+public class NumeroMaximoMinimo {
+
+ 
+
+    public static void main(String[] args) {
+        // Tamanho do array
+        int tamanhoArray = 15;
+
+ 
+
+        // Cria um objeto Random para gerar números aleatórios
+        Random random = new Random();
+
+ 
+
+        // Cria um array para armazenar os números aleatórios
+        int[] numerosAleatorios = new int[tamanhoArray];
+
+ 
+
+        // Preenche o array com números aleatórios entre 1 e 100
+        for (int i = 0; i < tamanhoArray; i++) {
+            numerosAleatorios[i] = random.nextInt(100) + 1;
+        }
+
+ 
+
+        // Inicializa as variáveis para o maior e o menor valores
+        int maiorValor = numerosAleatorios[0];
+        int menorValor = numerosAleatorios[0];
+
+ 
+
+        // Encontra o maior e o menor valor no array
+        for (int i = 1; i < tamanhoArray; i++) {
+            if (numerosAleatorios[i] > maiorValor) {
+                maiorValor = numerosAleatorios[i];
+            }
+            if (numerosAleatorios[i] < menorValor) {
+                menorValor = numerosAleatorios[i];
+            }
+        }
+
+ 
+
+        // Imprime o array de números aleatórios
+        System.out.println("Array de números aleatórios:");
+        for (int i = 0; i < tamanhoArray; i++) {
+            System.out.print(numerosAleatorios[i] + " ");
+        }
+
+ 
+
+        // Imprime o maior e o menor valor
+        System.out.println("\nMaior valor: " + maiorValor);
+        System.out.println("Menor valor: " + menorValor);
+    }
+}
+*/
+
+ 
+
+/* atividade 5
+import java.util.Random;
+
+ 
+
+public class ContandoImpares {
+
+ 
+
+    public static void main(String[] args) {
+        // Tamanho do array
+        int tamanhoArray = 30;
+
+ 
+
+        // Cria um objeto Random para gerar números aleatórios
+        Random random = new Random();
+
+ 
+
+        // Cria um array para armazenar os números aleatórios
+        int[] numerosAleatorios = new int[tamanhoArray];
+
+ 
+
+        // Preenche o array com números aleatórios entre 1 e 100
+        for (int i = 0; i < tamanhoArray; i++) {
+            numerosAleatorios[i] = random.nextInt(100) + 1;
+        }
+
+ 
+
+        // Inicializa uma variável para contar os números ímpares
+        int contadorImpares = 0;
+
+ 
+
+        // Conta os números ímpares no array
+        for (int i = 0; i < tamanhoArray; i++) {
+            if (numerosAleatorios[i] % 2 != 0) {
+                contadorImpares++;
+            }
+        }
+
+ 
+
+        // Imprime o array de números aleatórios
+        System.out.println("Array de números aleatórios:");
+        for (int i = 0; i < tamanhoArray; i++) {
+            System.out.print(numerosAleatorios[i] + " ");
+        }
+
+ 
+
+        // Imprime a contagem de números ímpares
+        System.out.println("\nNúmero de números ímpares: " + contadorImpares);
+    }
+}
+/* atividade 6
+import java.util.Random;
+
+ 
+
+public class ReversaoDeArray {
+
+ 
+
+    public static void main(String[] args) {
+        // Tamanho do array
+        int tamanhoArray = 10;
+
+ 
+
+        // Cria um objeto Random para gerar números aleatórios
+        Random random = new Random();
+
+ 
+
+        // Cria um array para armazenar os números aleatórios
+        int[] numerosAleatorios = new int[tamanhoArray];
+
+ 
+
+        // Preenche o array com números aleatórios entre 1 e 100
+        for (int i = 0; i < tamanhoArray; i++) {
+            numerosAleatorios[i] = random.nextInt(100) + 1;
+        }
+
+ 
+
+        // Imprime o array original
+        System.out.println("Array original:");
+        for (int i = 0; i < tamanhoArray; i++) {
+            System.out.print(numerosAleatorios[i] + " ");
+        }
+
+ 
+
+        // Imprime o array em ordem reversa
+        System.out.println("\nArray em ordem reversa:");
+        for (int i = tamanhoArray - 1; i >= 0; i--) {
+            System.out.print(numerosAleatorios[i] + " ");
+        }
+    }
+}
+*/
+
+ 
+
+/* atividade 7
+import java.util.Random;
+
+ 
+
+public class FrequenciaDeNumeros {
+
+ 
+
+    public static void main(String[] args) {
+        // Tamanho do array
+        int tamanhoArray = 50;
+
+ 
+
+        // Cria um objeto Random para gerar números aleatórios
+        Random random = new Random();
+
+ 
+
+        // Cria um array para armazenar os números aleatórios
+        int[] numerosAleatorios = new int[tamanhoArray];
+
+ 
+
+        // Preenche o array com números aleatórios entre 1 e 10
+        for (int i = 0; i < tamanhoArray; i++) {
+            numerosAleatorios[i] = random.nextInt(10) + 1;
+        }
+
+ 
+
+        // Cria um array para armazenar a frequência de cada número
+        int[] frequencia = new int[10]; // Índices de 1 a 10 representam os números
+
+ 
+
+        // Conta a frequência de cada número no array
+        for (int i = 0; i < tamanhoArray; i++) {
+            int numero = numerosAleatorios[i];
+            frequencia[numero - 1]++; // Subtrai 1 para ajustar o índice do array
+        }
+
+ 
+
+        // Imprime a frequência de cada número
+        for (int i = 0; i < 10; i++) {
+            int numero = i + 1; // Adiciona 1 para obter o número real
+            int contagem = frequencia[i];
+            System.out.println("Número " + numero + ": " + contagem + " vezes");
+        }
+    }
+}
+*/
+
+ 
+
+/* atividade 8
+import java.util.Scanner;
+
+ 
+
+public class ValorMaisFrequente {
+
+ 
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+ 
+
+        // Tamanho do array
+        int tamanhoArray = 10;
+
+ 
+
+        // Cria um array para armazenar os números inseridos pelo usuário
+        int[] numeros = new int[tamanhoArray];
+
+ 
+
+        // Solicita ao usuário inserir 10 números
+        for (int i = 0; i < tamanhoArray; i++) {
+            System.out.print("Digite o " + (i + 1) + "º número: ");
+            numeros[i] = scanner.nextInt();
+        }
+
+ 
+
+        // Encontra o valor mais frequente e sua frequência
+        int valorMaisFrequente = encontrarValorMaisFrequente(numeros);
+        int frequencia = contarFrequencia(numeros, valorMaisFrequente);
+
+ 
+
+        // Imprime o valor mais frequente e sua frequência
+        System.out.println("O valor mais frequente é " + valorMaisFrequente + " com frequência de " + frequencia + " vezes.");
+
+ 
+
+        scanner.close();
+    }
+
+ 
+
+    // Função para encontrar o valor mais frequente em um array
+    public static int encontrarValorMaisFrequente(int[] numeros) {
+        int valorMaisFrequente = 0;
+        int frequenciaMaxima = 0;
+
+ 
+
+        for (int i = 0; i < numeros.length; i++) {
+            int frequenciaAtual = 0;
+
+ 
+
+            for (int j = 0; j < numeros.length; j++) {
+                if (numeros[i] == numeros[j]) {
+                    frequenciaAtual++;
+                }
+            }
+
+ 
+
+            if (frequenciaAtual > frequenciaMaxima) {
+                frequenciaMaxima = frequenciaAtual;
+                valorMaisFrequente = numeros[i];
+            }
+        }
+
+ 
+
+        return valorMaisFrequente;
+    }
+
+ 
+
+    // Função para contar a frequência de um valor em um array
+    public static int contarFrequencia(int[] numeros, int valor) {
+        int frequencia = 0;
+
+ 
+
+        for (int i = 0; i < numeros.length; i++) {
+            if (numeros[i] == valor) {
+                frequencia++;
+            }
+        }
+
+ 
+
+        return frequencia;
+    }
+}
+*/
+
+ 
+
+/* atividade 9
+import java.util.Random;
+import java.util.Scanner;
+
+ 
+
+public class BuscaLinear {
+
+ 
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+ 
+
+        // Tamanho do array
+        int tamanhoArray = 25;
+
+ 
+
+        // Cria um objeto Random para gerar números aleatórios
+        Random random = new Random();
+
+ 
+
+        // Cria um array para armazenar os números aleatórios
+        int[] numerosAleatorios = new int[tamanhoArray];
+
+ 
+
+        // Preenche o array com números aleatórios entre 1 e 100
+        for (int i = 0; i < tamanhoArray; i++) {
+            numerosAleatorios[i] = random.nextInt(100) + 1;
+        }
+
+ 
+
+        // Imprime o array de números aleatórios
+        System.out.println("Array de números aleatórios:");
+        for (int i = 0; i < tamanhoArray; i++) {
+            System.out.print(numerosAleatorios[i] + " ");
+        }
+
+ 
+
+        // Solicita ao usuário inserir um número para busca
+        System.out.print("\nDigite um número para buscar no array: ");
+        int numeroBuscado = scanner.nextInt();
+
+ 
+
+        // Realiza a busca linear
+        boolean encontrado = false;
+        for (int i = 0; i < tamanhoArray; i++) {
+            if (numerosAleatorios[i] == numeroBuscado) {
+                encontrado = true;
+                break; // Sai do loop se encontrar o número
+            }
+        }
+
+ 
+
+        // Informa ao usuário o resultado da busca
+        if (encontrado) {
+            System.out.println("O número " + numeroBuscado + " foi encontrado no array.");
+        } else {
+            System.out.println("O número " + numeroBuscado + " não foi encontrado no array.");
+        }
+
+ 
+
+        scanner.close();
+    }
+}
+*/
+
+ 
+
+/* atividade 10
+import java.util.Random;
+
+ 
+
+public class SimulacaoJogoDados {
+
+ 
+
+    public static void main(String[] args) {
+        // Número de simulações
+        int numSimulacoes = 100;
+
+ 
+
+        // Contador para contar quantas vezes a soma é 7
+        int contagemSomaSete = 0;
+
+ 
+
+        // Cria um objeto Random para gerar números aleatórios
+        Random random = new Random();
+
+ 
+
+        for (int i = 0; i < numSimulacoes; i++) {
+            // Simula o lançamento de dois dados
+            int dado1 = random.nextInt(6) + 1; // Números de 1 a 6
+            int dado2 = random.nextInt(6) + 1; // Números de 1 a 6
+
+ 
+
+            // Calcula a soma dos dois dados
+            int soma = dado1 + dado2;
+
+ 
+
+            // Verifica se a soma é igual a 7
+            if (soma == 7) {
+                contagemSomaSete++;
+            }
+        }
+
+ 
+
+        // Imprime o resultado da simulação
+        System.out.println("Resultado da simulação:");
+        System.out.println("Número total de simulações: " + numSimulacoes);
+        System.out.println("Número de vezes que a soma foi 7: " + contagemSomaSete);
+    }
+}

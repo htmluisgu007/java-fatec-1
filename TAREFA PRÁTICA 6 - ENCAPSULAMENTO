@@ -1,0 +1,146 @@
+CLASSE PRINCIPAL:
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AleProjeto
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string marca;
+            int ano;
+            double motor;
+            Console.WriteLine("digite a marca do carro");
+            marca = Console.ReadLine();
+            Console.WriteLine("digite o ano do carro");
+            ano = int.Parse(Console.ReadLine());
+            Console.WriteLine("digite o motor do carro");
+            motor = double.Parse(Console.ReadLine());
+
+            Caro x = new Caro(marca, ano, motor);
+           
+
+            int velocidade1;    
+            int velocidade2;
+            int motorzinn;
+
+            Console.WriteLine("digite ligar motor");
+            motorzinn = int.Parse(Console.ReadLine());
+            if(motorzinn == 1)
+            {
+                x.motor = true;
+            }
+            else
+            {
+                x.motor = false;
+            }
+
+            Console.WriteLine("" + x.motor);
+            
+
+            Console.WriteLine("acelere o carro");
+            velocidade1 = int.Parse(Console.ReadLine());
+            x.Acelerar(velocidade1);
+            Console.WriteLine("sua velocidade " + x.Velocidade);
+
+            Console.WriteLine("digite a velocidade do carro");
+            velocidade2 = int.Parse(Console.ReadLine());
+            x.Acelerar(velocidade2);
+            Console.WriteLine("sua velocidade " + x.Velocidade);
+
+            Console.WriteLine("digite 1 para freiar o carro");
+            int freiou = int.Parse(Console.ReadLine());
+            if(freiou == 1) 
+            { 
+            x.Freiar();
+            Console.WriteLine("velocidade do carro" + x.estado);
+            }
+
+            Console.WriteLine("quantos litros de gasolina você quer?");
+            int gasosinha = int.Parse(Console.ReadLine());
+            x.gasosa(gasosinha);
+
+            Console.WriteLine("o preço ficou " + x.gasolina);
+
+        }
+    }
+}
+
+
+------------------------------------------------------------------------------------
+CLASSE CARRO:
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AleProjeto
+{
+    class Caro
+    {
+        public int Velocidade;
+        public double gasolina = 5.29;
+        public int estado;
+        public bool motor;
+        private string marca;
+        private int ano;
+        private double motor1;
+
+        public Caro(string marca, int ano, double motor1)
+        {
+            this.marca = marca;
+            this.ano = ano;
+            this.motor1 = motor1;
+        }
+
+        public bool Verificar()
+        {
+            if(this.motor == false)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+
+        public void Acelerar(int velocidade)
+        {
+            if(this.motor == true) 
+            { 
+
+            if(velocidade  < 180 && velocidade > 0) 
+            { 
+            this.Velocidade += velocidade; 
+            }
+            else
+            {
+                Console.WriteLine("menor que zero, ou maior que 180");
+            }
+
+            }
+        }
+
+       public void gasosa(double litros)
+        {
+            this.gasolina = this.gasolina * litros;
+        }
+
+        public void Freiar()
+        {
+            this.Velocidade = 0;
+        }
+
+
+    }
+}

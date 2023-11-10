@@ -1,0 +1,97 @@
+//Aluno.java
+package Polimorfismo;
+
+public class Aluno {
+    private String nome;
+    private int ra;
+
+    public Aluno(String nome, int ra) {
+        this.nome = nome;
+        this.ra = ra;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getRa() {
+        return ra;
+    }
+
+    public void setRa(int ra) {
+        this.ra = ra;
+    }
+
+    public void ExibirAluno() {
+        System.out.println("Nome: " + nome + ", Ra: " + ra);
+    }
+}
+
+//Comprar.java
+package Polimorfismo;
+
+public class Comprar {
+    public double RealizarCompra(Cupom cupom, double vp) {
+        double desconto = vp * 0.5;
+        cupom.Desconto = desconto;
+        double valorComDesconto = vp - cupom.Desconto;
+        return valorComDesconto;
+    }
+}
+
+//Cupom.java
+
+package Polimorfismo;
+
+public class Cupom {
+
+    public double Desconto;
+}
+
+//Endereco.java
+
+package Polimorfismo;
+
+public class Endereco {
+    private String informacao;
+
+    public Endereco(String informacao) {
+        this.informacao = informacao;
+    }
+}
+
+//Principal.java
+
+package Polimorfismo;
+
+public class Program {
+    public static void main(String[] args) {
+        // Dependência
+        Comprar comprar = new Comprar();
+        Cupom cupomzinho = new Cupom();
+        double mostrar = comprar.RealizarCompra(cupomzinho, 12);
+
+        System.out.println("Valor de sua compra: " + mostrar);
+        //
+
+        // Composição
+        Pessoa pessoa = new Pessoa();
+        pessoa.MostrarEndereco();
+        //
+
+        // Agregação
+        Aluno aluno1 = new Aluno("Mateus", 893829);
+        Aluno aluno2 = new Aluno("Luna", 23942);
+
+        Disciplina disciplina1 = new Disciplina("Técnicas de Programação");
+        disciplina1.CriarAluno(aluno1);
+        disciplina1.CriarAluno(aluno2);
+
+        disciplina1.MostrarAlunos();
+        //
+    }
+}

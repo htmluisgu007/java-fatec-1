@@ -1,0 +1,120 @@
+public class CEP {
+    private String cep;
+
+    public CEP(String cep) {
+        this.cep = cep;
+    }
+
+    public String getCEP() {
+        return cep;
+    }
+}
+
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CEPRepository {
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/seu_banco_de_dados";
+    private static final String USERNAME = "seu_usuario";
+    private static final String PASSWORD = "sua_senha";
+
+    public void saveCEP(CEP cep) {
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {
+            String query = "INSERT INTO cep (cep) VALUES (?) ON DUPLICATE KEY UPDATE cep=cep";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, cep.getCEP());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<CEP> getAllCEPs() {
+        List<CEP> ceps = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD)) {
+            String query = "SELECT cep FROM cep";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                String cepString = resultSet.getString("cep");
+                ceps.add(new CEP(cepString));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ceps;
+    }
+}
+
+
+import java.util.Scanner;
+
+public class CEPService {
+    private CEPRepository cepRepository;
+
+    public CEPService() {
+        this.cepRepository = new CEPRepository();
+    }
+
+    public void consultarCEP(String cep) {
+        // Aqui você faz a consulta do CEP usando uma API de consulta, por exemplo, ViaCEP
+        // Suponha que você já tenha uma função para fazer essa consulta chamada consultaCEPViaAPI
+        // String endereco = consultaCEPViaAPI(cep);
+        // System.out.println(endereco);
+
+        // Por simplicidade, aqui apenas exibimos uma mensagem simulando a consulta
+        System.out.println("Consulta realizada para o CEP: " + cep);
+
+        // Salvamos o CEP no banco
+        cepRepository.saveCEP(new CEP(cep));
+    }
+
+    public void listarCEPs() {
+        System.out.println("Lista de todos os CEPs consultados:");
+        for (CEP cep : cepRepository.getAllCEPs()) {
+            System.out.println(cep.getCEP());
+        }
+    }
+}
+
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        CEPService cepService = new CEPService();
+        Scanner scanner = new Scanner(System.in);
+
+        int opcao;
+        do {
+            System.out.println("Menu:");
+            System.out.println("1. Consultar CEP");
+            System.out.println("2. Listar todos os CEPs consultados");
+            System.out.println("3. Sair");
+            System.out.print("Escolha uma opção: ");
+            opcao = scanner.nextInt();
+            scanner.nextLine(); // Limpa o buffer do teclado
+
+            switch (opcao) {
+                case 1:
+                    System.out.print("Digite o CEP: ");
+                    String cep = scanner.nextLine();
+                    cepService.consultarCEP(cep);
+                    break;
+                case 2:
+                    cepService.listarCEPs();
+                    break;
+                case 3:
+                    System.out.println("Saindo...");
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        } while (opcao != 3);
+    }
+}
+
+
+

@@ -1,0 +1,50 @@
+import redis
+
+# Conecta ao servidor Redis local
+r = redis.Redis(host='localhost', port=6379, db=0)
+
+def adicionar_tarefa(descricao):
+    # Gera um ID único para a tarefa
+    tarefa_id = r.incr('tarefa_id')
+    chave = f'tarefa:{tarefa_id}'
+
+    # Adiciona a tarefa ao Redis com a descrição e status inicial como pendente
+    r.hmset(chave, {'descricao': descricao, 'status': 'pendente'})
+
+def listar_tarefas():
+    # Obtém todas as chaves do tipo 'tarefa:*'
+    chaves_tarefas = r.keys('tarefa:*')
+
+    # Para cada chave, obtém a descrição e o status da tarefa e imprime na tela
+    for chave in chaves_tarefas:
+        descricao = r.hget(chave, 'descricao').decode('utf-8')
+        status = r.hget(chave, 'status').decode('utf-8')
+        print(f'{chave.decode("utf-8")}: {descricao} - {status}')
+
+def marcar_como_concluida(tarefa_id):
+    # Atualiza o status da tarefa para 'concluída'
+    chave = f'tarefa:{tarefa_id}'
+    r.hset(chave, 'status', 'concluída')
+
+def remover_tarefas_concluidas():
+    # Obtém todas as chaves do tipo 'tarefa:*'
+    chaves_tarefas = r.keys('tarefa:*')
+
+    # Para cada chave, verifica se a tarefa está concluída e a remove
+    for chave in chaves_tarefas:
+        status = r.hget(chave, 'status').decode('utf-8')
+        if status == 'concluída':
+            r.delete(chave)
+
+# Teste das funções
+adicionar_tarefa('Estudar Python')
+adicionar_tarefa('Fazer compras')
+adicionar_tarefa('Ler livro')
+
+listar_tarefas()
+
+marcar_como_concluida(1)
+
+remover_tarefas_concluidas()
+
+listar_tarefas()

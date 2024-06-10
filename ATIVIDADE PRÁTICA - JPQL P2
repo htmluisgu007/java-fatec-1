@@ -1,0 +1,183 @@
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String titulo;
+    private String conteudo;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comentario> comentarios = new ArrayList<>();
+
+    // getters e setters
+}
+
+import javax.persistence.*;
+
+@Entity
+public class Comentario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String texto;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    // getters e setters
+}
+
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("blog");
+        EntityManager em = emf.createEntityManager();
+
+        // Consulta derivada: Todos os comentários do post com ID 1
+        Post post = em.find(Post.class, 1L); // Supondo que o post com ID 1 exista
+        List<Comentario> comentariosDoPost = post.getComentarios();
+
+        for (Comentario comentario : comentariosDoPost) {
+            System.out.println(comentario.getTexto());
+        }
+
+        em.close();
+        emf.close();
+    }
+}
+
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("blog");
+        EntityManager em = emf.createEntityManager();
+
+        // Consulta JPQL: Todos os posts que contenham a palavra "Java" no título ou no conteúdo
+        List<Post> postsComPalavraChave = em.createQuery("SELECT p FROM Post p WHERE p.titulo LIKE :palavraChave OR p.conteudo LIKE :palavraChave", Post.class)
+                .setParameter("palavraChave", "%Java%")
+                .getResultList();
+
+        for (Post post : postsComPalavraChave) {
+            System.out.println(post.getTitulo());
+        }
+
+        em.close();
+        emf.close();
+    }
+}
+
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class Categoria {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nome;
+
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
+    private List<Produto> produtos = new ArrayList<>();
+
+    // getters e setters
+}
+
+/////////
+
+import javax.persistence.*;
+
+@Entity
+public class Produto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nome;
+    private double preco;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
+    // getters e setters
+}
+
+import javax.persistence.*;
+
+@Entity
+public class Produto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nome;
+    private double preco;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
+    // getters e setters
+}
+
+
+import javax.persistence.*;
+
+@Entity
+public class Produto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nome;
+    private double preco;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
+    // getters e setters
+}
+
+
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("catalogo");
+        EntityManager em = emf.createEntityManager();
+
+        // Consulta nativa: Todas as categorias cujo nome começa com a letra 'C'
+        Query query = em.createNativeQuery("SELECT * FROM categoria WHERE nome LIKE ?", Categoria.class);
+        query.setParameter(1, "C%");
+        List<Categoria> categorias = query.getResultList();
+
+        for (Categoria categoria : categorias) {
+            System.out.println(categoria.getNome());
+        }
+
+        em.close();
+        emf.close();
+    }
+}
+

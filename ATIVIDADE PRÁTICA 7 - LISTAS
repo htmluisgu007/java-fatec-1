@@ -1,0 +1,187 @@
+//Exercício 1: Gestão de Tarefas
+// Classe para representar uma Tarefa
+class Tarefa {
+    private String titulo;
+    private String descricao;
+    private String status; // "Concluída" ou "Pendente"
+
+    public Tarefa(String titulo, String descricao) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.status = "Pendente";
+    }
+
+    // Getters e Setters
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void marcarComoConcluida() {
+        this.status = "Concluída";
+    }
+
+    @Override
+    public String toString() {
+        return "Título: " + titulo + ", Descrição: " + descricao + ", Status: " + status;
+    }
+}
+
+// Classe para gerenciar a lista de Tarefas
+import java.util.ArrayList;
+import java.util.List;
+
+class ListaTarefas {
+    private List<Tarefa> tarefas;
+
+    public ListaTarefas() {
+        this.tarefas = new ArrayList<>();
+    }
+
+    public void adicionarTarefa(Tarefa tarefa) {
+        tarefas.add(tarefa);
+    }
+
+    public void removerTarefa(Tarefa tarefa) {
+        tarefas.remove(tarefa);
+    }
+
+    public void exibirTarefas() {
+        for (Tarefa tarefa : tarefas) {
+            System.out.println(tarefa);
+        }
+    }
+
+    public void marcarTarefaComoConcluida(String titulo) {
+        for (Tarefa tarefa : tarefas) {
+            if (tarefa.getTitulo().equalsIgnoreCase(titulo)) {
+                tarefa.marcarComoConcluida();
+                break;
+            }
+        }
+    }
+}
+
+// Classe principal para testar a funcionalidade de gestão de tarefas
+public class MainGestaoTarefas {
+    public static void main(String[] args) {
+        ListaTarefas lista = new ListaTarefas();
+
+        Tarefa tarefa1 = new Tarefa("Comprar leite", "Comprar 2 litros de leite no supermercado");
+        Tarefa tarefa2 = new Tarefa("Estudar Java", "Estudar o capítulo de herança em Java");
+
+        lista.adicionarTarefa(tarefa1);
+        lista.adicionarTarefa(tarefa2);
+
+        System.out.println("Tarefas Pendente:");
+        lista.exibirTarefas();
+
+        lista.marcarTarefaComoConcluida("Comprar leite");
+
+        System.out.println("\nTarefas Após Marcar 'Comprar leite' como Concluída:");
+        lista.exibirTarefas();
+    }
+}
+//Exercício 2: Gestão de Pedidos em um Restaurante
+// Classe para representar um Pedido
+import java.util.List;
+import java.util.ArrayList;
+
+class Pedido {
+    private int id;
+    private List<String> itens;
+    private String status; // "Em andamento" ou "Entregue"
+
+    public Pedido(int id, List<String> itens) {
+        this.id = id;
+        this.itens = new ArrayList<>(itens);
+        this.status = "Em andamento";
+    }
+
+    // Getters e Setters
+    public int getId() {
+        return id;
+    }
+
+    public List<String> getItens() {
+        return itens;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void marcarComoEntregue() {
+        this.status = "Entregue";
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id + ", Itens: " + itens + ", Status: " + status;
+    }
+}
+
+// Classe para gerenciar a lista de Pedidos
+class ListaPedidos {
+    private List<Pedido> pedidos;
+
+    public ListaPedidos() {
+        this.pedidos = new ArrayList<>();
+    }
+
+    public void adicionarPedido(Pedido pedido) {
+        pedidos.add(pedido);
+    }
+
+    public void removerPedido(Pedido pedido) {
+        pedidos.remove(pedido);
+    }
+
+    public void exibirPedidosEmAndamento() {
+        for (Pedido pedido : pedidos) {
+            if (pedido.getStatus().equals("Em andamento")) {
+                System.out.println(pedido);
+            }
+        }
+    }
+
+    public void marcarPedidoComoEntregue(int id) {
+        for (Pedido pedido : pedidos) {
+            if (pedido.getId() == id) {
+                pedido.marcarComoEntregue();
+                break;
+            }
+        }
+    }
+}
+
+// Classe principal para testar a funcionalidade de gestão de pedidos
+public class MainGestaoPedidos {
+    public static void main(String[] args) {
+        ListaPedidos lista = new ListaPedidos();
+
+        List<String> itens1 = List.of("Pizza", "Refrigerante");
+        List<String> itens2 = List.of("Hamburguer", "Batata frita");
+
+        Pedido pedido1 = new Pedido(1, itens1);
+        Pedido pedido2 = new Pedido(2, itens2);
+
+        lista.adicionarPedido(pedido1);
+        lista.adicionarPedido(pedido2);
+
+        System.out.println("Pedidos em Andamento:");
+        lista.exibirPedidosEmAndamento();
+
+        lista.marcarPedidoComoEntregue(1);
+
+        System.out.println("\nPedidos em Andamento Após Marcar Pedido 1 como Entregue:");
+        lista.exibirPedidosEmAndamento();
+    }
+}

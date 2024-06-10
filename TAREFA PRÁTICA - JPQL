@@ -1,0 +1,155 @@
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class Departamento {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String nome;
+
+    @OneToMany(mappedBy = "departamento")
+    private List<Funcionario> funcionarios = new ArrayList<>();
+
+    // getters e setters
+}
+
+
+import javax.persistence.*;
+
+@Entity
+public class Funcionario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String nome;
+    private double salario;
+
+    @ManyToOne
+    @JoinColumn(name = "departamento_id")
+    private Departamento departamento;
+
+    // getters e setters
+}
+
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+public class Main {
+    public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("empresa");
+        EntityManager em = emf.createEntityManager();
+
+        // Inserindo departamentos
+        Departamento departamento1 = new Departamento();
+        departamento1.setNome("TI");
+
+        Departamento departamento2 = new Departamento();
+        departamento2.setNome("RH");
+
+        em.getTransaction().begin();
+        em.persist(departamento1);
+        em.persist(departamento2);
+        em.getTransaction().commit();
+
+        // Inserindo funcionários
+        Funcionario funcionario1 = new Funcionario();
+        funcionario1.setNome("João");
+        funcionario1.setSalario(3000);
+        funcionario1.setDepartamento(departamento1);
+
+        Funcionario funcionario2 = new Funcionario();
+        funcionario2.setNome("Maria");
+        funcionario2.setSalario(3500);
+        funcionario2.setDepartamento(departamento2);
+
+        em.getTransaction().begin();
+        em.persist(funcionario1);
+        em.persist(funcionario2);
+        em.getTransaction().commit();
+
+        em.close();
+        emf.close();
+    }
+}
+
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("empresa");
+        EntityManager em = emf.createEntityManager();
+
+        // Consulta derivada: Todos os funcionários do departamento "TI"
+        Departamento departamento = em.find(Departamento.class, 1L); // Supondo que o departamento "TI" tenha o ID 1
+        List<Funcionario> funcionariosTI = departamento.getFuncionarios();
+
+        for (Funcionario funcionario : funcionariosTI) {
+            System.out.println(funcionario.getNome());
+        }
+
+        em.close();
+        emf.close();
+    }
+}
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("empresa");
+        EntityManager em = emf.createEntityManager();
+
+        // Consulta derivada: Todos os departamentos que possuem o funcionário "João"
+        List<Departamento> departamentosComJoao = em.createQuery("SELECT f.departamento FROM Funcionario f WHERE f.nome = :nome", Departamento.class)
+                .setParameter("nome", "João")
+                .getResultList();
+
+        for (Departamento departamento : departamentosComJoao) {
+            System.out.println(departamento.getNome());
+        }
+
+        em.close();
+        emf.close();
+    }
+}
+
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("empresa");
+        EntityManager em = emf.createEntityManager();
+
+        // Consulta JPQL: Todos os funcionários do departamento "TI" que ganham mais do que 2500
+        List<Funcionario> funcionariosSalarioMaiorQue2500 = em.createQuery("SELECT f FROM Funcionario f WHERE f.departamento.nome = :departamentoNome AND f.salario > :salario", Funcionario.class)
+                .setParameter("departamentoNome", "TI")
+                .setParameter("salario", 2500.0)
+                .getResultList();
+
+        for (Funcionario funcionario : funcionariosSalarioMaiorQue2500) {
+            System.out.println(funcionario.getNome());
+        }
+
+        em.close();
+        emf.close();
+    }
+}
+
+

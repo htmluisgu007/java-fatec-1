@@ -1,0 +1,70 @@
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+// Classe para representar um comentário
+class Comentario {
+    private int id;
+    private int postId;
+    private int name;
+    private String email;
+    private String body;
+
+    // Getters e setters
+    // ...
+}
+
+// Classe principal
+public class EmailMarketingComentarios {
+
+    private static final String API_URL = "https://jsonplaceholder.typicode.com/comments";
+
+    public static void main(String[] args) throws IOException {
+        // Obter comentários da API
+        List<Comentario> comentarios = obterComentariosDaAPI();
+
+        // Segmentar comentários relevantes
+        List<Comentario> comentariosRelevantes = segmentarComentariosRelevantes(comentarios);
+
+        // Enviar e-mails para cada comentário relevante
+        enviarEmails(comentariosRelevantes);
+    }
+
+    private static List<Comentario> obterComentariosDaAPI() throws IOException {
+        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(API_URL))
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            String json = response.body();
+            ObjectMapper mapper = new ObjectMapper();
+            return Arrays.asList(mapper.readValue(json, Comentario[].class));
+        } else {
+            throw new IOException("Erro ao obter comentários da API: " + response.statusCode());
+        }
+    }
+
+    private static List<Comentario> segmentarComentariosRelevantes(List<Comentario> comentarios) {
+        // Implementar lógica de segmentação aqui
+        // Por exemplo, filtrar comentários por produto, tipo de comentário, etc.
+        return comentarios;
+    }
+
+    private static void enviarEmails(List<Comentario> comentariosRelevantes) {
+        // Implementar lógica de envio de e-mail aqui
+        // Por exemplo, usar uma biblioteca de envio de e-mail para enviar e-mails personalizados para cada usuário
+        for (Comentario comentario : comentariosRelevantes) {
+            // Enviar e-mail para o usuário com base em suas informações e comentário
+        }
+    }
+}
